@@ -7,7 +7,6 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
-	"math/bits"
 )
 
 // 1000000000000 mojo = 1.               XCH =  Chia      = Teramojo = One Trillion Mojos
@@ -72,8 +71,8 @@ type Coin struct {
 
 func (c Coin) ID() []byte {
 	// Convert c.Amount to a []byte
-	size := (bits.Len64(c.Amount) + 8)
-	amount := make([]byte, size*8)
+	// size := (bits.Len64(c.Amount) + 8) >> 3
+	amount := make([]byte, 8)
 	binary.BigEndian.PutUint64(amount, c.Amount)
 	fmt.Println(amount)
 

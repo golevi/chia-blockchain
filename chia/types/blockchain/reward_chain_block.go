@@ -41,4 +41,16 @@ type RewardChainBlockUnfinished struct {
 // 		is_transaction_block: bool
 //
 type RewardChainBlock struct {
+	Weight               *big.Int      `json:"weight"`
+	Height               uint32        `json:"height"`
+	TotalIters           *big.Int      `json:"total_iters"`
+	SignagePointIndex    uint8         `json:"signage_point_index"`
+	POSSSCCChallengeHash [32]byte      `json:"pos_ss_cc_challenge_hash"`
+	ProofOfSpace         *ProofOfSpace `json:"proof_of_space"`
+	// ChallengeChainSP     *ChallengeChainSP   `json:"challenge_chain_sp"`
+	// ChallengeChainIP     *ChallengeChainIP   `json:"challenge_chain_ip"`
+	// RewardChainSP        *RewardChainSP      `json:"reward_chain_sp"`
+	// RewardChainIP        *RewardChainIP      `json:"reward_chain_ip"`
+	// InfusedChallengeIP   *InfusedChallengeIP `json:"infused_challenge_chain_ip"`
+	IsTransactionBlock bool `json:"is_transaction_block"`
 }
