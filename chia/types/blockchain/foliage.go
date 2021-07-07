@@ -2,8 +2,6 @@
 
 package blockchain
 
-import "github.com/celo-org/celo-bls-go/bls"
-
 // TransactionsInfo
 //
 // 		# Information that goes along with each transaction block
@@ -29,7 +27,7 @@ type TransactionsInfo struct {
 	// * https://pypi.org/project/blspy/
 	// * https://pkg.go.dev/github.com/celo-org/celo-bls-go/bls
 	// * https://crypto.stanford.edu/~dabo/pubs/papers/BLSmultisig.html
-	AggregatedSignature bls.Signature `json:"aggregated_signature"`
+	// AggregatedSignature bls.Signature `json:"aggregated_signature"`
 
 	Fees uint64 `json:"fees"`
 	Cost uint64 `json:"cost"`
@@ -70,8 +68,8 @@ type FoliageTransactionBlock struct {
 type FoliageBlockData struct {
 	UnfinishedRewardBlockHash [32]byte `json:"unfinished_reward_block_hash"`
 
-	PoolTarget    PoolTarget    `json:"pool_target"`
-	PoolSignature bls.Signature `json:"pool_signature"`
+	PoolTarget PoolTarget `json:"pool_target"`
+	// PoolSignature bls.Signature `json:"pool_signature"`
 
 	FarmerRewardPuzzleHash [32]byte `json:"farmer_reward_puzzle_hash"`
 	ExtensionData          [32]byte `json:"extension_data"`
@@ -93,8 +91,8 @@ type Foliage struct {
 	PrevBlockHash   [32]byte `json:"prev_block_hash"`
 	RewardBlockHash [32]byte `json:"reward_block_hash"`
 
-	FoliageBlockData                 FoliageBlockData `json:"foliage_block_data"`
-	FoliageBlockDataSignature        bls.Signature    `json:"foliage_block_data_signature"`
-	FoliageTransactionBlockHash      [32]byte         `json:"foliage_transaction_block_hash"`
-	FoliageTransactionBlockSignature bls.Signature    `json:"foliage_transaction_block_signature"`
+	FoliageBlockData FoliageBlockData `json:"foliage_block_data"`
+	// FoliageBlockDataSignature        bls.Signature    `json:"foliage_block_data_signature"`
+	FoliageTransactionBlockHash [32]byte `json:"foliage_transaction_block_hash"`
+	// FoliageTransactionBlockSignature bls.Signature    `json:"foliage_transaction_block_signature"`
 }
