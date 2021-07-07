@@ -6,7 +6,7 @@ import (
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/hex"
-	"fmt"
+	"math/bits"
 )
 
 // 1000000000000 mojo = 1.               XCH =  Chia      = Teramojo = One Trillion Mojos
@@ -70,22 +70,45 @@ type Coin struct {
 }
 
 func (c Coin) ID() []byte {
-	// Convert c.Amount to a []byte
-	// size := (bits.Len64(c.Amount) + 8) >> 3
-	amount := make([]byte, 8)
-	binary.BigEndian.PutUint64(amount, c.Amount)
-	fmt.Println(amount)
-
 	hasher := sha256.New()
 	hasher.Write(c.ParentCoinInfo)
 	hasher.Write(c.PuzzleHash)
-	hasher.Write(amount)
+	hasher.Write(c.getAmount())
 
 	return hasher.Sum(nil)
 }
 
 func (c Coin) StringID() string {
 	return hex.EncodeToString(c.ID())
+}
+
+// amount
+//
+//		 def int_to_bytes(v):
+//		     byte_count = (v.bit_length() + 8) >> 3
+//		     if v == 0:
+//		         return b""
+//		     r = v.to_bytes(byte_count, "big", signed=True)
+//		     # make sure the string returned is minimal
+//		     # ie. no leading 00 or ff bytes that are unnecessary
+//		     while len(r) > 1 and r[0] == (0xFF if r[1] & 0x80 else 0):
+//		         r = r[1:]
+//		     return r
+//
+func (c Coin) getAmount() []byte {
+	if c.Amount == 0 {
+		return []byte{}
+	}
+	byteCount := bits.Len64(c.Amount) * 8
+	r := make([]byte, byteCount)
+
+	binary.BigEndian.PutUint64(r, c.Amount)
+
+	for len(r) > 1 {
+		r = r[1:]
+	}
+
+	return r
 }
 
 // ConvertToMojo converts XCH to Mojo
