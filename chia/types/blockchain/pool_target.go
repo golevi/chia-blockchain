@@ -1,4 +1,4 @@
-// https://github.com/Chia-Network/chia-blockchain/blob/46395374ae9d1394925d79a9ed9c025d20f5d216/chia/types/blockchain_format/pool_target.py#L10
+// https://raw.githubusercontent.com/Chia-Network/chia-blockchain/46395374ae9d1394925d79a9ed9c025d20f5d216/chia/types/blockchain_format/pool_target.py
 
 package blockchain
 
