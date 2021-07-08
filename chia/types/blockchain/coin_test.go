@@ -26,6 +26,18 @@ func TestCoinStringID(t *testing.T) {
 			Puzzle: "5edd2a1ab38b2ad31b326d147adbc1693183e82fad9335346cafb1a1417c420c",
 			Amount: 1.75 * Teramojo,
 		},
+		{
+			Want:   "4b878f285b49e3198dcf78f7627bf720f9dc19bc59dc88ff5e3a48718fce2868",
+			Parent: "3ff07eb358e8255a65c30a2dce0e5fbb00000000000000000000000000083e9d",
+			Puzzle: "907491ca39c35bc1f9a6eda33f7c0f97a9f583975088dad7216f1edd79f522ae",
+			Amount: 0.25 * Teramojo,
+		},
+		{
+			Want:   "8efcf70686577ac6dc0df7717b87833190f3d6cf17ad435e24adbb3ee3b5ae47",
+			Parent: "55ca386a9a232d455e6dda65e499f07a775710696b5c07a486011c4a28813fa0",
+			Puzzle: "98f7a41f496927e3ead26888a68991cd81338543a5e5d1a8ad87b1d7b8ce9337",
+			Amount: 6 * Teramojo,
+		},
 	}
 
 	for _, c := range *coins {
