@@ -41,7 +41,7 @@ const (
 // 		def get_hash(self) -> bytes32:
 // 			# This does not use streamable format for hashing, the amount is
 // 			# serialized using CLVM integer format.
-
+//
 // 			# Note that int_to_bytes() will prepend a 0 to integers where the most
 // 			# significant bit is set, to encode it as a positive number. This
 // 			# despite "amount" being unsigned. This way, a CLVM program can generate
