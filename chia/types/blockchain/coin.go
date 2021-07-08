@@ -6,7 +6,6 @@ import (
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/hex"
-	"math/bits"
 )
 
 // 1000000000000 mojo = 1.               XCH =  Chia      = Teramojo = One Trillion Mojos
@@ -82,7 +81,16 @@ func (c Coin) StringID() string {
 	return hex.EncodeToString(c.ID())
 }
 
-// amount
+// getAmount
+//
+// https://github.com/Chia-Network/chia-blockchain/blob/main/chia/types/blockchain_format/coin.py#L26
+//
+//		 # Note that int_to_bytes() will prepend a 0 to integers where the most
+//       # significant bit is set, to encode it as a positive number. This
+//     	 # despite "amount" being unsigned. This way, a CLVM program can generate
+//       # these hashes easily.
+//
+// https://github.com/Chia-Network/clvm/blob/main/clvm/casts.py#L8
 //
 //		 def int_to_bytes(v):
 //		     byte_count = (v.bit_length() + 8) >> 3
@@ -99,16 +107,57 @@ func (c Coin) getAmount() []byte {
 	if c.Amount == 0 {
 		return []byte{}
 	}
-	byteCount := bits.Len64(c.Amount) * 8
-	r := make([]byte, byteCount)
 
+	// Could check if amount is one mojo and return 1 byte slice with 1 to speed
+	// things up. If I do this, then I probably need more tests.
+	if c.Amount == 1 {
+		return []byte{1}
+	}
+
+	// Create a byte slice to contain the amount.
+	//
+	// Size returns how many bytes Write would generate to encode the value v,
+	// which must be a fixed-size value or a slice of fixed-size values, or a
+	// pointer to such data. If v is neither of these, Size returns -1.
+	//
+	// https://pkg.go.dev/encoding/binary#Size
+	r := make([]byte, binary.Size(c.Amount))
+
+	// Chia uses big endian for this.
+	//
+	// https://github.com/Chia-Network/clvm/blob/main/clvm/casts.py#L12
+	// https://en.wikipedia.org/wiki/Endianness
+	// https://pkg.go.dev/encoding/binary
 	binary.BigEndian.PutUint64(r, c.Amount)
 
-	for len(r) > 1 {
+	// These are the comments from the python implementation in the CLVM repo. I
+	// don't fully understand the conditions in that while loop. Go might not be
+	// able to create a loop like that.
+	//
+	// https://github.com/Chia-Network/clvm/blob/main/clvm/casts.py
+	// make sure the string returned is minimal
+	// ie. no leading 00 or ff bytes that are unnecessary
+	// while len(r) > 1 and r[0] == (0xFF if r[1] & 0x80 else 0):
+	for len(r) > 1 && check(r) {
 		r = r[1:]
 	}
 
 	return r
+}
+
+// @TODO Evaluate if we really need this. I only created it because the original
+// code confused me and I thought it would be easier to figure out with a its
+// own function. It isn't hurting anything, so I'll leave it for now.
+func check(r []byte) bool {
+	if r[0] == 0xff {
+		return true
+	}
+
+	if r[0] == 0x0 {
+		return true
+	}
+
+	return false
 }
 
 // ConvertToMojo converts XCH to Mojo
