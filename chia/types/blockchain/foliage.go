@@ -15,8 +15,8 @@ import "github.com/celo-org/celo-bls-go/bls"
 // 		reward_claims_incorporated: List[Coin]  # These can be in any order
 //
 type TransactionsInfo struct {
-	GeneratorRoot     [32]byte `json:"generator_root"`
-	GeneratorRefsRoot [32]byte `json:"generator_refs_root"`
+	GeneratorRoot     []byte `json:"generator_root"`
+	GeneratorRefsRoot []byte `json:"generator_refs_root"`
 
 	// AggregatedSignature is a BLS Signature.
 	//
@@ -70,8 +70,8 @@ type FoliageTransactionBlock struct {
 type FoliageBlockData struct {
 	UnfinishedRewardBlockHash [32]byte `json:"unfinished_reward_block_hash"`
 
-	PoolTarget    PoolTarget    `json:"pool_target"`
-	PoolSignature bls.Signature `json:"pool_signature"`
+	PoolTarget PoolTarget `json:"pool_target"`
+	// PoolSignature bls.Signature `json:"pool_signature"`
 
 	FarmerRewardPuzzleHash [32]byte `json:"farmer_reward_puzzle_hash"`
 	ExtensionData          [32]byte `json:"extension_data"`
@@ -93,8 +93,8 @@ type Foliage struct {
 	PrevBlockHash   [32]byte `json:"prev_block_hash"`
 	RewardBlockHash [32]byte `json:"reward_block_hash"`
 
-	FoliageBlockData                 FoliageBlockData `json:"foliage_block_data"`
-	FoliageBlockDataSignature        bls.Signature    `json:"foliage_block_data_signature"`
-	FoliageTransactionBlockHash      [32]byte         `json:"foliage_transaction_block_hash"`
-	FoliageTransactionBlockSignature bls.Signature    `json:"foliage_transaction_block_signature"`
+	FoliageBlockData            FoliageBlockData `json:"foliage_block_data"`
+	FoliageBlockDataSignature   bls.Signature    `json:"foliage_block_data_signature"`
+	FoliageTransactionBlockHash [32]byte         `json:"foliage_transaction_block_hash"`
+	// FoliageTransactionBlockSignature bls.Signature    `json:"foliage_transaction_block_signature"`
 }
