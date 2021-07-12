@@ -8,12 +8,12 @@ package types
 // 		message: bytes
 //
 type Announcement struct {
-	OriginInfo [32]byte `json:"origin_info"`
-	Message    []byte   `json:"message"`
+	OriginInfo []byte `json:"origin_info"`
+	Message    []byte `json:"message"`
 }
 
 // @TODO
 // Name
-func (a Announcement) Name() [32]byte {
-	return [32]byte{}
+func (a Announcement) Name() []byte {
+	return []byte{}
 }

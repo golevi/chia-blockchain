@@ -18,7 +18,7 @@ import "math/big"
 type RewardChainBlockUnfinished struct {
 	TotalIters           *big.Int `json:"total_iters"`
 	SignagePointIndex    uint8    `json:"signage_point_index"`
-	POSSSCCChallengeHash [32]byte `json:"pos_ss_cc_challenge_hash"`
+	POSSSCCChallengeHash []byte   `json:"pos_ss_cc_challenge_hash"`
 
 	ProofOfSpace *ProofOfSpace `json:"proof_of_space"`
 }
@@ -45,7 +45,7 @@ type RewardChainBlock struct {
 	Height               uint32        `json:"height"`
 	TotalIters           *big.Int      `json:"total_iters"`
 	SignagePointIndex    uint8         `json:"signage_point_index"`
-	POSSSCCChallengeHash [32]byte      `json:"pos_ss_cc_challenge_hash"`
+	POSSSCCChallengeHash []byte        `json:"pos_ss_cc_challenge_hash"`
 	ProofOfSpace         *ProofOfSpace `json:"proof_of_space"`
 	// ChallengeChainSP     *ChallengeChainSP   `json:"challenge_chain_sp"`
 	// ChallengeChainIP     *ChallengeChainIP   `json:"challenge_chain_ip"`

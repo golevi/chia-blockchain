@@ -9,7 +9,7 @@ package blockchain
 // 		output: ClassgroupElement
 //
 type VDFInfo struct {
-	Challenge          [32]byte `json:"challenge"`
-	NumberOfIterations uint64   `json:"number_of_iterations"`
+	Challenge          []byte `json:"challenge"`
+	NumberOfIterations uint64 `json:"number_of_iterations"`
 	// Output             ClassgroupElement `json:"output"`
 }
