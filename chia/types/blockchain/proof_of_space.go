@@ -14,12 +14,12 @@ import "github.com/celo-org/celo-bls-go/bls"
 // 		proof: bytes
 //
 type ProofOfSpace struct {
-	Challenge [32]byte `json:"challenge"`
+	Challenge []byte `json:"challenge"`
 
 	PoolPublicKey bls.PublicKey `json:"pool_public_key"`
 	PlotPublicKey bls.PublicKey `json:"plot_public_key"`
 
-	PoolContractPuzzleHash [32]byte `json:"pool_contract_puzzle_hash"`
+	PoolContractPuzzleHash []byte `json:"pool_contract_puzzle_hash"`
 
 	Size uint8 `json:"size"`
 

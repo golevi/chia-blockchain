@@ -8,6 +8,6 @@ package blockchain
 // 		max_height: uint32  # A max height of 0 means it is valid forever
 //
 type PoolTarget struct {
-	PuzzleHash [32]byte `json:"puzzle_hash"`
-	MaxHeight  uint32   `json:"max_height"`
+	PuzzleHash []byte `json:"puzzle_hash"`
+	MaxHeight  uint32 `json:"max_height"`
 }

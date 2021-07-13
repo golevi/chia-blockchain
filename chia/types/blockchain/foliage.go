@@ -2,6 +2,8 @@
 
 package blockchain
 
+import "github.com/celo-org/celo-bls-go/bls"
+
 // TransactionsInfo
 //
 // 		# Information that goes along with each transaction block
@@ -13,8 +15,8 @@ package blockchain
 // 		reward_claims_incorporated: List[Coin]  # These can be in any order
 //
 type TransactionsInfo struct {
-	GeneratorRoot     [32]byte `json:"generator_root"`
-	GeneratorRefsRoot [32]byte `json:"generator_refs_root"`
+	GeneratorRoot     []byte `json:"generator_root"`
+	GeneratorRefsRoot []byte `json:"generator_refs_root"`
 
 	// AggregatedSignature is a BLS Signature.
 	//
@@ -46,14 +48,14 @@ type TransactionsInfo struct {
 // 		transactions_info_hash: bytes32
 //
 type FoliageTransactionBlock struct {
-	PrevTransactionBlockHash [32]byte `json:"prev_transaction_block_hash"`
+	PrevTransactionBlockHash []byte `json:"prev_transaction_block_hash"`
 
 	Timestamp uint64 `json:"timestamp"`
 
-	FilterHash           [32]byte `json:"filter_hash"`
-	AdditionsRoot        [32]byte `json:"additions_root"`
-	RemovalsRoot         [32]byte `json:"removals_root"`
-	TransactionsInfoHash [32]byte `json:"transactions_info_hash"`
+	FilterHash           []byte `json:"filter_hash"`
+	AdditionsRoot        []byte `json:"additions_root"`
+	RemovalsRoot         []byte `json:"removals_root"`
+	TransactionsInfoHash []byte `json:"transactions_info_hash"`
 }
 
 // FoliageBlockData
@@ -66,13 +68,13 @@ type FoliageTransactionBlock struct {
 // 		extension_data: bytes32  # Used for future updates. Can be any 32 byte value initially
 //
 type FoliageBlockData struct {
-	UnfinishedRewardBlockHash [32]byte `json:"unfinished_reward_block_hash"`
+	UnfinishedRewardBlockHash []byte `json:"unfinished_reward_block_hash"`
 
 	PoolTarget PoolTarget `json:"pool_target"`
 	// PoolSignature bls.Signature `json:"pool_signature"`
 
-	FarmerRewardPuzzleHash [32]byte `json:"farmer_reward_puzzle_hash"`
-	ExtensionData          [32]byte `json:"extension_data"`
+	FarmerRewardPuzzleHash []byte `json:"farmer_reward_puzzle_hash"`
+	ExtensionData          []byte `json:"extension_data"`
 }
 
 // Foliage
@@ -88,11 +90,11 @@ type FoliageBlockData struct {
 // 		foliage_transaction_block_signature: Optional[G2Element]
 //
 type Foliage struct {
-	PrevBlockHash   [32]byte `json:"prev_block_hash"`
-	RewardBlockHash [32]byte `json:"reward_block_hash"`
+	PrevBlockHash   []byte `json:"prev_block_hash"`
+	RewardBlockHash []byte `json:"reward_block_hash"`
 
-	FoliageBlockData FoliageBlockData `json:"foliage_block_data"`
-	// FoliageBlockDataSignature        bls.Signature    `json:"foliage_block_data_signature"`
-	FoliageTransactionBlockHash [32]byte `json:"foliage_transaction_block_hash"`
+	FoliageBlockData            FoliageBlockData `json:"foliage_block_data"`
+	FoliageBlockDataSignature   bls.Signature    `json:"foliage_block_data_signature"`
+	FoliageTransactionBlockHash []byte           `json:"foliage_transaction_block_hash"`
 	// FoliageTransactionBlockSignature bls.Signature    `json:"foliage_transaction_block_signature"`
 }

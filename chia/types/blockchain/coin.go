@@ -68,6 +68,10 @@ type Coin struct {
 	Amount         uint64 `json:"amount"`
 }
 
+func (c Coin) Name() []byte {
+	return c.ID()
+}
+
 func (c Coin) ID() []byte {
 	hasher := sha256.New()
 	hasher.Write(c.ParentCoinInfo)
