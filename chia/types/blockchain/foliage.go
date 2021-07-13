@@ -1,4 +1,4 @@
-// https://github.com/Chia-Network/chia-blockchain/blob/main/chia/types/blockchain_format/foliage.py
+// https://raw.githubusercontent.com/Chia-Network/chia-blockchain/main/chia/types/blockchain_format/foliage.py
 
 package blockchain
 
