@@ -1,10 +1,9 @@
 package consensus
 
 import (
+	"encoding/hex"
 	"math/big"
 	"testing"
-
-	"github.com/golevi/chia-blockchain/chia/util"
 )
 
 // TestCalculateIterationsQuality makes sure we're getting the right number from
@@ -12,40 +11,31 @@ import (
 //
 // https://github.com/Chia-Network/chia-blockchain/blob/1.2.1/tests/core/consensus/test_pot_iterations.py#L79
 func TestCalculateIterationsQuality(t *testing.T) {
-	var qualityBytes []byte
-	slotIndex := big.NewInt(0)
-	k := big.NewInt(32)
-	farmerIndex := big.NewInt(100)
-	qualityBytes = append(qualityBytes, slotIndex.Bytes()...)
-	qualityBytes = append(qualityBytes, k.Bytes()...)
-	qualityBytes = append(qualityBytes, farmerIndex.Bytes()...)
+	difficultyConstantFactor := big.NewInt(1)
+	difficultyConstantFactor.SetString("147573952589676412928", 10)
 
-	spIndex := big.NewInt(1)
-	var spHashInput []byte
-	spHashInput = append(spHashInput, slotIndex.Bytes()...)
-	spHashInput = append(spHashInput, spIndex.Bytes()...)
+	qualityString, err := hex.DecodeString("6bc7e96778d56f99640d7d606682543a1449fe84c53d9b3bd764decacc29a10c")
+	if err != nil {
+		t.Error(err)
+	}
 
-	// sp_hash = std_hash(slot_index.to_bytes(4, "big") + sp_index.to_bytes(4, "big"))
-	spHash := util.StandardHash(spHashInput)
+	size := 32
+	difficulty := 2400
 
-	// quality = std_hash(slot_index.to_bytes(4, "big") + k.to_bytes(1, "big") + bytes(farmer_index))
-	quality := util.StandardHash(qualityBytes)
-
-	// sp_interval_iters = uint64(100000000 / 32)
-	difficulty := uint64(500000000000)
-
-	difficultyConstantFactor := big.NewInt(2)
-	difficultyConstantFactor.Exp(difficultyConstantFactor, big.NewInt(25), nil)
+	CCSPOutputHash, err := hex.DecodeString("396fef5662016a16c8849b58bcbd6362368792f637b2a7a2abd91db2f35b9a80")
+	if err != nil {
+		t.Error(err)
+	}
 
 	result := CalculateIterationsQuality(
 		*difficultyConstantFactor,
-		quality,
-		int(k.Int64()),
-		difficulty,
-		spHash,
+		qualityString,
+		size,
+		uint64(difficulty),
+		CCSPOutputHash,
 	)
 
-	expected := uint64(116799048)
+	expected := uint64(1110877509098)
 
 	if result != expected {
 		t.Errorf("Expected %d, got %d", expected, result)
