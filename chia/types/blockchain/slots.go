@@ -1,4 +1,4 @@
-// https://raw.githubusercontent.com/Chia-Network/chia-blockchain/main/chia/types/blockchain_format/slots.py
+// https://github.com/Chia-Network/chia-blockchain/blob/1.2.1/chia/types/blockchain_format/slots.py
 
 package blockchain
 
@@ -11,4 +11,9 @@ package blockchain
 //
 type ChallengeBlockInfo struct {
 	ProofOfSpace *ProofOfSpace `json:"proof_of_space"`
+
+	// ChallengeChainSPVDF is only present if it isn't the first signage point.
+	ChallengeChainSPVDF VDFInfo `json:"challenge_chain_sp_vdf"`
+	// ChallengeChainSPSignature []byte  `json:"challenge_chain_sp_signature"`
+	ChallengeChainIPVDF VDFInfo `json:"challenge_chain_ip_vdf"`
 }
