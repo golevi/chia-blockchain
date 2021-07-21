@@ -34,6 +34,8 @@ func CalculateIterationsQuality(
 	input = append(input, CCSPOutputHash...)
 	SPQualityBytes := util.StandardHash(input)
 
+	// fmt.Println(hex.EncodeToString(SPQualityBytes))
+
 	// iters = uint64(
 	//     int(difficulty)
 	//     * int(difficulty_constant_factor)
